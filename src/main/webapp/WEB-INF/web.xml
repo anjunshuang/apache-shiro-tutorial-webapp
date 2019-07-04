@@ -19,15 +19,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!-- 声明定义了一个在web应用程序启动时启动ServletContextListener Shiro环境（包括shiro SecurityManager）的声明，
+    默认情况下，此侦听器自动知道WEB-INF/shiro.ini为Shiro配置查找我们的文件
+    -->
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
 
+    <!-- 声明定义了主ShiroFilter。此过滤器有望过滤所有请求到Web应用程序，因此Shiro可以在允许请求到达应用程序之前执行必要的身份和访问控制操作。-->
     <filter>
         <filter-name>ShiroFilter</filter-name>
         <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
     </filter>
 
+    <!-- 声明确保所有请求类型被提起ShiroFilter。通常filter-mapping声明不指定<dispatcher>元素，
+    但是Shiro需要它们全部定义，因此它可以过滤可能为Web应用程序执行的所有不同请求类型。-->
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
